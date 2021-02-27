@@ -7,7 +7,6 @@ from datetime import datetime
 import click
 from bluepy import btle
 from prometheus_client import Gauge, start_http_server
-from rich.logging import RichHandler
 
 gauge_rssi = Gauge("switchbot_rssi", "The Received Signal Strength Indicator (RSSI) of the device", ["device"])
 gauge_battery = Gauge("switchbot_battery", "The battery percentage of the device", ["device"])
@@ -79,25 +78,27 @@ def publish_measurement(device: btle.ScanEntry, measurement: Measurement):
 
 
 def configure_logging(verbose, quiet, default_level=logging.INFO):
-    handlers = [RichHandler(rich_tracebacks=True)]
     level = default_level + (quiet - verbose) * 10
-    logging.basicConfig(format="%(message)s", datefmt="[%X]", handlers=handlers, level=level)
+    logging.basicConfig(format="[%(levelname)-8s] %(message)s", datefmt="[%X]", level=level)
 
 
 @click.command()
+@click.argument("mac-address")
+@click.option("-p", "--metrics-port", default=8080, help="Expose metrics as a Prometheus target")
 @click.option("-v", "--verbose", count=True, help="Increase logging verbosity")
 @click.option("-q", "--quiet", count=True, help="Decrease verbosity")
-@click.option("-m", "--mac-address", help="MAC address of the Switchbot thermometer to scrape stats from")
-@click.option("-p", "--metrics-port", default=8080, help="Expose metrics as a Prometheus target")
-def main(verbose, quiet, mac_address, metrics_port):
+def main(mac_address, metrics_port, verbose, quiet):
+    """Runs a Prometheus exporter scraping metrics from the Switchbot thermometer at the given MAC address"""
     configure_logging(verbose, quiet)
-
     start_http_server(metrics_port)
 
-    logging.info("Started Prometheus exporter on ':%s' for Swichbot thermometer at '%s'", metrics_port, mac_address)
+    logging.debug("Started Prometheus exporter on ':%s' for Swichbot thermometer at '%s'", metrics_port, mac_address)
     scanner = btle.Scanner().withDelegate(ScanProcessor(mac_address))
     while True:
-        scanner.scan(30)
+        try:
+            scanner.scan(30)
+        except btle.BTLEDisconnectError as ex:
+            logging.debug("Ignoring disconnection error: %s", ex)
 
 
 if __name__ == "__main__":
