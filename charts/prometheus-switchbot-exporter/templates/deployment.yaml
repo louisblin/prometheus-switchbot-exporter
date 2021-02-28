@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "prometheus-switchbot-exporter.fullname" . }}
+  labels:
+    {{- include "prometheus-switchbot-exporter.labels" . | nindent 4 }}
+spec:
+  selector:
+    matchLabels:
+      {{- include "prometheus-switchbot-exporter.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "prometheus-switchbot-exporter.selectorLabels" . | nindent 8 }}
+    spec:
+      hostNetwork: true
+      containers:
+      - name: {{ .Chart.Name }}
+        image: "{{ .Values.imageRepository }}:{{ .Chart.AppVersion }}"
+        imagePullPolicy: {{ .Values.imagePullPolicy }}
+        args:
+        - --verbose
+        - --metrics-port={{ .Values.metricsPort }}
+        securityContext:
+          {{- toYaml .Values.securityContext | nindent 12 }}
+        ports:
+        - name: metrics
+          containerPort: {{ .Values.metricsPort }}
+          protocol: TCP
+        livenessProbe:
+          httpGet:
+            path: /
+            port: metrics
+        readinessProbe:
+          httpGet:
+            path: /
+            port: metrics
+        resources:
+          {{- toYaml .Values.resources | nindent 12 }}

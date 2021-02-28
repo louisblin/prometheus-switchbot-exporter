@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: {{ include "prometheus-switchbot-exporter.fullname" . }}-test-connection
+  labels:
+    {{- include "prometheus-switchbot-exporter.labels" . | nindent 4 }}
+  annotations:
+    helm.sh/hook: test
+spec:
+  containers:
+  - name: wget
+    image: busybox
+    command: ['wget']
+    args: ['{{ include "prometheus-switchbot-exporter.fullname" . }}:{{ .Values.metricsPort }}']
+  restartPolicy: Never
