@@ -10,4 +10,4 @@ RUN apt-get update && \
 
 RUN pip3 install -r requirements.txt
 
-ENTRYPOINT [ "python", "prometheus_switchbot_exporter/exporter.py" ]
+ENTRYPOINT [ "python", "-m", "prometheus_switchbot_exporter" ]
