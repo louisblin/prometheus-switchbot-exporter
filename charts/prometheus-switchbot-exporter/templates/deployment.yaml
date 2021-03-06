@@ -19,7 +19,6 @@ spec:
         image: "{{ .Values.imageRepository }}:{{ .Chart.AppVersion }}"
         imagePullPolicy: {{ .Values.imagePullPolicy }}
         args:
-        - --verbose
         - --metrics-port={{ .Values.metricsPort }}
         securityContext:
           {{- toYaml .Values.securityContext | nindent 12 }}

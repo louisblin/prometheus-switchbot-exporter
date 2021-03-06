@@ -14,4 +14,7 @@ spec:
     - {{ .Release.Namespace }}
   endpoints:
   - port: metrics
+    {{- with .Values.serviceMonitorOptions }}
+    {{ toYaml . | nindent 4 }}
+    {{- end }}
 {{ end }}

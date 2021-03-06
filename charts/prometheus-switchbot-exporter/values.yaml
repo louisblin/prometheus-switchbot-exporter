@@ -1,25 +1,23 @@
-nameOverride: ""
 fullnameOverride: ""
+nameOverride: ""
 
 imageRepository: louisleblin/prometheus-switchbot-exporter
 imagePullPolicy: Always
 
+# This is needed to be able to use the blueooth device
+# TODO: investigate options requesting narrower permissions
+securityContext:
+  privileged: true
+
 metricsPort: 8080
 
-securityContext:
-  # TODO: only import the bluetooth device
-  privileged: true
-  # capabilities:
-  #   drop:
-  #   - ALL
-  # readOnlyRootFilesystem: true
-  # runAsNonRoot: true
-  # runAsUser: 1000
+resources:
+  limits:
+    cpu: 25m
+    memory: 32Mi
+  requests:
+    cpu: 25m
+    memory: 32Mi
 
-resources: {}
-  # limits:
-  #   cpu: 100m
-  #   memory: 128Mi
-  # requests:
-  #   cpu: 100m
-  #   memory: 128Mi
+serviceMonitorOptions:
+  interval: 10s
