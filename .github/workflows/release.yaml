@@ -57,20 +57,29 @@ jobs:
     needs: github-release
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
+      - name: Checkout master branch
         uses: actions/checkout@v2
+        with:
+          path: master
+          ref: master
       
-      - name: Push chart to GitHub pages
-        run: |
-          tag=${{ needs.github-release.outputs.tag }}
-          helm package charts/prometheus-switchbot-exporter --app-version $tag --version $tag
+      - name: Create Helm chart
+        run: helm package master/charts/prometheus-switchbot-exporter --app-version ${{ needs.github-release.outputs.tag }} --version ${{ needs.github-release.outputs.tag }}
 
-          git remote -v
-          git worktree add .pages origin/gh-pages
-          mv *.tgz .pages/
-          cd .pages
+      - name: Checkout GitHub pages branch
+        uses: actions/checkout@v2
+        with:
+          path: gh-pages
+          ref: gh-pages
+
+      - name: Push Helm chart
+        run: |
+          mv *.tgz gh-pages/
+          cd gh-pages/
           helm repo index --url https://charts.blin.dev/ --merge index.yaml .
 
+          git config user.name github-actions
+          git config user.email github-actions@github.com
           git add .
           git commit -am "Publish chart prometheus-switchbot-exporter=$tag"
-          git push origin gh-pages
+          git push
