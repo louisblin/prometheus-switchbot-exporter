@@ -7,9 +7,14 @@ A Prometheus exporter for [SwitchBot Meter] devices.
 The simplest way to deploy this exporter is on Kubernetes, using the Helm chart
 provided.
 
+First, add this repository to your Helm client:
 ```sh
-$ helm repo add prometheus-switchbot-exporter https://louisblin.github.io/prometheus-switchbot-exporter
-$ helm install switchbot-exporter prometheus-switchbot-exporter/prometheus-switchbot-exporter
+helm repo add prometheus-switchbot-exporter https://louisblin.github.io/prometheus-switchbot-exporter
+```
+
+Then, deploy the chart to Kubernetes:
+```sh
+helm install switchbot-exporter prometheus-switchbot-exporter/prometheus-switchbot-exporter
 ```
 
 [DockerHub]: https://hub.docker.com/r/louisleblin/prometheus-switchbot-exporter/tags
