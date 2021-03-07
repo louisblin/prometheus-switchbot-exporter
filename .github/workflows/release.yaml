@@ -27,11 +27,11 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           tag_name: ${{ steps.tag_version.outputs.new_tag }}
-          release_name: Release ${{ steps.tag_version.outputs.new_tag }}
           body: ${{ steps.tag_version.outputs.changelog }}
 
   publish-docker:
     name: Publish Docker image
+    needs: github-release
     runs-on: ubuntu-latest
     steps:
       - name: Set up QEMU
@@ -54,6 +54,7 @@ jobs:
 
   publish-helm:
     name: Publish Helm chart
+    needs: github-release
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
