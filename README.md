@@ -4,18 +4,28 @@ A Prometheus exporter for [SwitchBot Meter] devices.
 
 ## Usage
 
+### Prometheus exporter
+
 The simplest way to deploy this exporter is on Kubernetes, using the Helm chart
 provided.
 
-First, add this repository to your Helm client:
+First, add this repository to your Helm client.
 ```sh
 helm repo add prometheus-switchbot-exporter https://louisblin.github.io/prometheus-switchbot-exporter
 ```
 
-Then, deploy the chart to Kubernetes:
+Then, deploy the chart to Kubernetes.
 ```sh
 helm install switchbot-exporter prometheus-switchbot-exporter/prometheus-switchbot-exporter
 ```
+
+### Grafana dashboard
+
+Once Prometheus is collecting your metrics, you can use the dashboard under
+[`./dashboard`](./dashboard/grafana.json) to visualize them.
+
+![](./dashboard/grafana.png)
+
 
 [DockerHub]: https://hub.docker.com/r/louisleblin/prometheus-switchbot-exporter/tags
 [Image Size]: https://img.shields.io/docker/image-size/louisleblin/prometheus-switchbot-exporter?sort=date
