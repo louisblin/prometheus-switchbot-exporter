@@ -64,9 +64,11 @@ jobs:
         run: |
           tag=${{ needs.github-release.outputs.tag }}
           helm package charts/prometheus-switchbot-exporter --app-version $tag --version $tag
-          git worktree add .pages gh-pages
+
+          git remote -v
+          git worktree add .pages origin/gh-pages
+          mv *.tgz .pages/
           cd .pages
-          mv ../*.tgz
           helm repo index --url https://charts.blin.dev/ --merge index.yaml .
 
           git add .
