@@ -2,6 +2,7 @@ fullnameOverride: ""
 nameOverride: ""
 
 imageRepository: louisleblin/prometheus-switchbot-exporter
+imageTag: ""
 imagePullPolicy: Always
 
 # This is needed to be able to use the blueooth device

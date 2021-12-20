@@ -5,6 +5,9 @@ metadata:
   labels:
     {{- include "prometheus-switchbot-exporter.labels" . | nindent 4 }}
 spec:
+  # Delete existing pods first to release their NodePort
+  strategy:
+    type: Recreate
   selector:
     matchLabels:
       {{- include "prometheus-switchbot-exporter.selectorLabels" . | nindent 6 }}
@@ -16,7 +19,7 @@ spec:
       hostNetwork: true
       containers:
       - name: {{ .Chart.Name }}
-        image: "{{ .Values.imageRepository }}:{{ .Chart.AppVersion }}"
+        image: "{{ .Values.imageRepository }}:{{ .Values.imageTag | default .Chart.AppVersion }}"
         imagePullPolicy: {{ .Values.imagePullPolicy }}
         args:
         - --metrics-port={{ .Values.metricsPort }}
@@ -30,9 +33,12 @@ spec:
           httpGet:
             path: /
             port: metrics
-        readinessProbe:
+        # Allow 60s to start and load initial state
+        startupProbe:
           httpGet:
             path: /
             port: metrics
+          failureThreshold: 30
+          periodSeconds: 2
         resources:
           {{- toYaml .Values.resources | nindent 12 }}
