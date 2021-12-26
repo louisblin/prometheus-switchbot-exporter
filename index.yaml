@@ -2,8 +2,19 @@ apiVersion: v1
 entries:
   prometheus-switchbot-exporter:
   - apiVersion: v2
+    appVersion: v0.0.7
+    created: "2021-12-26T01:35:05.086815029Z"
+    description: A Helm chart to run a Prometheus exporter for Switchbot thermometers
+      on Kubernetes
+    digest: fc5e2db3791d5c9d0437cead6681983da4edc08ada91f16e3d79b0a2aac995d5
+    name: prometheus-switchbot-exporter
+    type: application
+    urls:
+    - https://louisblin.github.io/prometheus-switchbot-exporter/prometheus-switchbot-exporter-v0.0.7.tgz
+    version: v0.0.7
+  - apiVersion: v2
     appVersion: v0.0.6
-    created: "2021-12-20T17:31:01.350028411Z"
+    created: "2021-12-26T01:35:05.086287725Z"
     description: A Helm chart to run a Prometheus exporter for Switchbot thermometers
       on Kubernetes
     digest: b04539c5b75fe8f06b2ae69ae2c8b478c188241b92839354947c28c5cec5bb6a
@@ -14,7 +25,7 @@ entries:
     version: v0.0.6
   - apiVersion: v2
     appVersion: v0.0.5
-    created: "2021-12-20T17:31:01.349660909Z"
+    created: "2021-12-26T01:35:05.085851122Z"
     description: A Helm chart to run a Prometheus exporter for Switchbot thermometers
       on Kubernetes
     digest: fd2a7f73ca5abe62a074921738e570d3a558958412420a7b214c0b8e2091edaf
@@ -25,7 +36,7 @@ entries:
     version: v0.0.5
   - apiVersion: v2
     appVersion: v0.0.4
-    created: "2021-12-20T17:31:01.349266607Z"
+    created: "2021-12-26T01:35:05.084279912Z"
     description: A Helm chart to run a Prometheus exporter for Switchbot thermometers
       on Kubernetes
     digest: 96d7c544f57b95889d73c73b7eff32ffc13550201fade9c2703cbb40dc55425d
@@ -36,7 +47,7 @@ entries:
     version: v0.0.4
   - apiVersion: v2
     appVersion: v0.0.3
-    created: "2021-12-20T17:31:01.348803404Z"
+    created: "2021-12-26T01:35:05.083714708Z"
     description: A Helm chart to run a Prometheus exporter for Switchbot thermometers
       on Kubernetes
     digest: 7b8f6fcd8000034a24511f98bf1aed6ab8da5bdfd9a25cea4d2debf98d456bf7
@@ -47,7 +58,7 @@ entries:
     version: v0.0.3
   - apiVersion: v2
     appVersion: v0.0.2
-    created: "2021-12-20T17:31:01.348436302Z"
+    created: "2021-12-26T01:35:05.083272605Z"
     description: A Helm chart to run a Prometheus exporter for Switchbot thermometers
       on Kubernetes
     digest: 74a7c45dffb22e6dd228ce8bdf62bb9064a5aa982c316b92d1ee981eddd06ef5
@@ -58,7 +69,7 @@ entries:
     version: v0.0.2
   - apiVersion: v2
     appVersion: v0.0.1
-    created: "2021-12-20T17:31:01.347998299Z"
+    created: "2021-12-26T01:35:05.082840802Z"
     description: A Helm chart to run a Prometheus exporter for Switchbot thermometers
       on Kubernetes
     digest: a79382d6aea8619a69bd935d7f1086ec11928af8e374fd928611a720eca4aab9
@@ -67,4 +78,4 @@ entries:
     urls:
     - https://louisblin.github.io/prometheus-switchbot-exporter/prometheus-switchbot-exporter-v0.0.1.tgz
     version: v0.0.1
-generated: "2021-12-20T17:31:01.347330795Z"
+generated: "2021-12-26T01:35:05.082062297Z"
