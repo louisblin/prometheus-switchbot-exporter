@@ -4,6 +4,10 @@ metadata:
   name: {{ include "prometheus-switchbot-exporter.fullname" . }}
   labels:
     {{- include "prometheus-switchbot-exporter.labels" . | nindent 4 }}
+  annotations:
+    # Enable Prometheus Autodiscovery to configure the Datadog agent to scrape these metrics
+    # ref: https://docs.datadoghq.com/agent/kubernetes/prometheus/#configuration-1
+    prometheus.io/scrape: "true"
 spec:
   selector:
     {{- include "prometheus-switchbot-exporter.selectorLabels" . | nindent 4 }}
